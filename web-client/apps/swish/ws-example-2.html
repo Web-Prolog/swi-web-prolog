@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Example 2</title>
+    <script>
+      var ws = new WebSocket('ws://localhost:3060/ws','pcp-0.2');
+      var program = 
+         `echo :-
+              pengine_input('Input a term!', Something),
+              (   Something == null
+              ->  true
+              ;   pengine_output(Something),
+                  echo
+              ).`;
+      ws.onopen = function (message) {
+        ws.send(JSON.stringify({
+          command: 'pengine_spawn',
+          options: '[src_text("' + program + '")]'
+        }));
+      };
+      ws.onmessage = function (message) {
+        var event = JSON.parse(message.data);
+        if (event.type == 'spawned') {
+          ws.send(JSON.stringify({
+            command: 'pengine_ask',
+            pid: event.pid,
+            query: 'echo'
+          }));
+        } else if (event.type == 'prompt') {
+          var response = prompt(event.data);
+          ws.send(JSON.stringify({
+            command: 'pengine_respond',
+            pid: event.pid,
+            term: response
+          }));
+        } else if (event.type == 'output') {
+          document.getElementById("output").innerHTML += 
+              JSON.stringify(event.data) + "<br/>";
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <div id="output"></div>
+  </body>
+</html>

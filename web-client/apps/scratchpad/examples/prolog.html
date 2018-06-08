@@ -1,0 +1,75 @@
+ 
+<html lang="en">   
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	    <script type="text/javascript" src="/vendor/jquery/jquery-2.0.3.min.js"></script>
+	    <script type="text/javascript" src="/pengine/pengines.js"></script>
+	    <style>
+	    	body, input, textarea {
+	    		font-family: monospace;
+	    		font-size: 14px;
+	    	}
+	    	textarea, input {
+	    		width: 100%;
+	    		padding: 4px;
+	    	}
+	    </style>
+	    <script type="text/javascript">
+	        var pengine;
+	    	function write(string) {
+	    		$('#output').append(string + "<br />")
+	    	}
+    	    function handleCreate() {
+        	    pengine.ask( $("#query").val());
+		    }
+		    function handleSuccess() {
+		        var solution = JSON.stringify(this.data);
+				write(solution);
+				if (!this.more) {
+					write("No more solutions");
+				}
+		    }
+		    function handleFailure() {
+		        write("Failed");;
+		    }
+		    function handleError() {
+		        write(this.data);
+		    }
+		    function query() {
+    		    pengine = new Pengine({
+                    oncreate: handleCreate,
+    		        onsuccess: handleSuccess,
+    		        onfailure: handleFailure,
+    		        onerror:   handleError,
+    		        src: $("#src").val()
+    		    });
+		    }
+	    </script>
+	</head>
+	<body>
+		<h3>Prolog source</h3>
+		<textarea id="src" rows="14">
+ancestor_of(X, Y) :- parent_of(X, Y).
+ancestor_of(X, Z) :- parent_of(X, Y), ancestor_of(Y, Z).
+
+parent_of(X, Y) :- father_of(X, Y).
+parent_of(X, Y) :- mother_of(X, Y).
+
+mother_of(trude, sally).
+
+father_of(tom, sally).
+father_of(tom, erica).
+father_of(mike, tom).
+</textarea>
+		<h3>Query</h3>
+		<input type="text" id="query" value="ancestor_of(X, Y)"/>
+		<h3>Control</h3>
+		<button onclick="query()">First</button>
+		<button onclick="pengine.next()">Next</button>
+		<button onclick="pengine.stop()">Stop</button>
+		<button onclick="pengine.abort()">Abort</button>
+		<button onclick="$('#output').html('')">Clear output</button>
+		<h3>Output</h3>
+		<div id="output"></div>
+	</body>
+</html>

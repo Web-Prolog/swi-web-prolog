@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>Pengines Scratchpad</title>
+      <meta name="description" content="">
+      <meta name="author" content="Torbjörn Lager">
+      <!-- CSS -->
+      <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/apps/scratchpad/css/scratchpad.css">
+      <link rel="shortcut icon" href="/favicon.ico">
+   </head>
+   <body>
+      <header class="navbar navbar-default app">
+         <div class="container pull-left">
+            <div class="navbar-header">
+               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a href="/"><img style="position:absolute;top:4px;left:4px;" src="/apps/scratchpad/img/logo.png"></a>
+               <a href="/" style="margin-left:30px;font-size:20px" class="navbar-brand">
+               &nbsp;Scratchpad
+               </a>
+            </div>
+            <nav class="collapse navbar-collapse bs-navbar-collapse">
+               <ul class="nav navbar-nav">
+                  <li class="dropdown">
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">File<b class="caret"></b></a>
+                     <ul id="file-menu" class="dropdown-menu">
+                        <li><a id="new">New</a></li>
+                        <li class="divider"></li>
+                        <li><a id="save">Save</a></li>
+                        <li class="divider"></li>
+                        <li><a id="share">Share...</a></li>
+                        <li class="divider"></li>
+                        <li><a id="collaborate">Collaborate...</a></li>
+                        <li class="divider"></li>
+                        <li><a id="prefs">Preferences...</a></li>
+                        <li class="divider"></li>
+                        <li><a id="print">Print...</a></li>
+                     </ul>
+                  </li>
+                  <li class="dropdown">
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit<b class="caret"></b></a>
+                     <ul id="edit-menu" class="dropdown-menu">
+                        <li><a id="undo">Undo</a></li>
+                        <li><a id="redo">Redo</a></li>
+                        <li class="divider"></li>
+                        <li><a id="indent">Indent</a></li>
+                        <li><a id="outdent">Outdent</a></li>
+                        <li class="divider"></li>
+                        <li><a id="comment">Toggle comment</a></li>
+                        <li class="divider"></li>
+                        <li><a id="find">Find and replace...</a></li>
+                     </ul>
+                  </li>
+                  <li class="dropdown">
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples<b class="caret"></b></a>
+                     <ul id="example-menu" class="dropdown-menu">
+
+                        <li><a href="/apps/scratchpad/examples/simple.html">Simple</a></li>
+                        <li><a href="/apps/scratchpad/examples/simple_chunked.html">Simple chunked answers</a></li>
+                        <li><a href="/apps/scratchpad/examples/hello_world.html">Output from Prolog</a></li>
+                        <li><a href="/apps/scratchpad/examples/input_output.html">Input/Output</a></li>
+                        <li><a href="/apps/scratchpad/examples/queens.html">Queens</a></li>
+                        <li><a href="/apps/scratchpad/examples/prolog.html">Web Prolog</a></li>
+                        <li><a href="/apps/scratchpad/examples/prolog_viewer.html">PLTP Viewer</a></li>
+                        <li><a href="/apps/scratchpad/examples/client_side_templating.html">Client side templating</a></li>
+                        <li><a href="/apps/scratchpad/examples/expert_system.html">Expert system</a></li>
+                        <li><a href="/apps/scratchpad/examples/remote_call.html">Non-determinstic RPC</a></li>
+                        <li><a href="/apps/scratchpad/examples/two_pengines.html">Browser with two pengines</a></li>
+                        <li><a href="/apps/scratchpad/examples/spoken_eliza.html">Spoken Eliza</a></li>
+                        <li><a href="/apps/scratchpad/index.html">Escher Scratchpad</a></li>
+                        
+                     </ul>
+                  </li>
+                  <li class="dropdown">
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
+                     <ul id="help-menu" class="dropdown-menu">
+                        <li><a href="#about" data-toggle="modal">About...</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#help" data-toggle="modal">Help...</a></li>
+                     </ul>
+                  </li>
+               </ul>
+               <button id="run-btn" class="btn btn-primary pull-left">Run</button>
+            </nav>
+         </div>
+      </header>
+      <div id="preferences" class="modal fade" tabindex="-1">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h4 id="myModalLabel">Preferences</h4>
+               </div>
+               <div class="modal-body">
+                  <form class="form-horizontal">
+                     <legend>General</legend>
+                     <div class="form-group">
+                        <label class="col-lg-3 control-label" for="theme-menu">Theme </label>
+                        <select id="theme-menu" class="input-sm preference-menu">
+                           <option value="chrome">chrome</option>
+                           <option value="clouds">clouds</option>
+                           <option value="dawn">dawn</option>
+                           <option value="dreamweaver">dreamweaver</option>
+                           <option value="eclipse">eclipse</option>
+                           <option value="github">github</option>
+                           <option selected value="textmate">textmate</option>
+                           <option value="tomorrow">tomorrow</option>
+                           <option value="xcode">xcode</option>
+                        </select>
+                     </div>
+                     <legend>Editor</legend>
+                     <div class="form-group">
+                        <label class="col-lg-3 control-label" for="font-family-menu">Font family </label>
+                        <select id="font-family-menu" class="input-sm preference-menu">
+                           <option value="'andale mono',monospace">Andale Mono</option>
+                           <option value="consolas,monospace">Consolas</option>
+                           <option selected value="'courier new',monospace">Courier New</option>
+                           <option value="courier,monospace">Courier</option>
+                           <option value="monaco,monospace">Monaco</option>
+                           <option value="menlo,monospace">Menlo</option>
+                           <option value="'ubuntu mono',monospace">Ubuntu Mono</option>
+                           <option value="'dejavu',monospace">Dejavu</option>
+                        </select>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-lg-3 control-label" for="font-size-menu">Font size </label>
+                        <select id="font-size-menu" class="input-sm preference-menu">
+                           <option value="10">10</option>
+                           <option value="12">12</option>
+                           <option selected value="14">14</option>
+                           <option value="16">16</option>
+                           <option value="18">18</option>
+                           <option value="20">20</option>
+                        </select>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-lg-3 control-label" for="tab-size-menu">Tab size </label>
+                        <select id="tab-size-menu" class="input-sm preference-menu">
+                           <option value="2">2</option>
+                           <option selected value="4">4</option>
+                           <option value="6">6</option>
+                           <option value="8">8</option>
+                        </select>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-lg-3 control-label" for="tab-soft-checkbox">Use soft tabs</label>
+                        <input id="tab-soft-checkbox" class="input-sm" checked type="checkbox">
+                     </div>
+                     <div class="form-group">
+                        <label class="col-lg-3 control-label" for="line-wrap-checkbox">Lines</label>
+                        <label class="checkbox-inline"><input id="line-wrap-checkbox" checked type="checkbox" class=""> Wrap</label>
+                        <label class="checkbox-inline"><input id="line-highlight-checkbox" type="checkbox"> Highlight current</label>
+                        <label class="checkbox-inline"><input id="line-numbering-checkbox" checked type="checkbox"> Show numbers</label>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="share-dialog" class="modal fade" tabindex="-1">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h3 id="myModalLabel">Share your program!</h3>
+               </div>
+               <div class="modal-body">
+                  <p>Your program is saved to the <span style="color:darkblue">Pengines Scratchpad</span> server for a period of at least one month. A link to it is given below. Copy the link, send it around, do what you want with it. Anyone in possession of the link will be able to access <span style="color:darkblue">Pengines Scratchpad</span> with your document loaded and ready to run.</p>
+                  <p>
+                     Link: <input style="width:520px;" class="input-sm" type="text" id="url" onclick="this.select()" value="">
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="about" class="modal fade" tabindex="-1">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h4 id="myModalLabel">About <span style="color:darkblue">Pengines Scratchpad</span><span class="pull-right">Version 0.9.3&nbsp;&nbsp;</span></h4>
+               </div>
+               <div class="modal-body">
+                  <p><span style="color:darkblue">Pengines Scratchpad</span> is part of the Pengines platform. This is where you can learn how to program the interaction between JavaScript and Prolog, and also quickly prototype your applications.</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="help" class="modal fade" tabindex="-1">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h2 id="myModalLabel"><span style="color:darkblue">Pengines Scratchpad</span></h2>
+               </div>
+               <div class="modal-body">
+                  <h4>Table of Contents</h4>
+                  <ul>
+                     <li><a class="stophash" href="#motivation">Motivation</a></li>
+                     <li><a class="stophash"  href="#time_limit">Time limit</a></li>
+                     <li><a class="stophash"  href="#known_issues">Known issues</a></li>
+                     <li><a class="stophash"  href="#technology">Technology</a></li>
+                     <li><a class="stophash"  href="#source_code">Source code</a></li>
+                  </ul>
+                  <h4 id="motivation">Motivation</h4>
+                  <p>
+                     <span style="color:darkblue">Pengines Scratchpad</span> is inspired by web-based tools such as <a target="_blank" href="http://jsfiddle.net/">JSFIDDLE</a> in that it allows you to develop a program and then share it with others on the Web. However, lacking both debugger and profiler, <span style="color:darkblue">Pengines Scratchpad</span> is far from a full-fledged IDE for Prolog embedded in HTML, and to avoid compromising the server it does not allow you to execute "dangerous" Prolog predicates such as predicates reading and writing files. (It does however allow you to use <code>pengine_input/1</code> and <code>pengine_output/1</code> but they will only "read" from and "write" to your web browser.)
+                  </p>
+                  <h4 id="time_limit">Time limit</h4>
+                  <p>
+                     Prolog goals will be allowed to execute on the server for 300 seconds before aborting and returning with a message stating that the time limit has been exceeded. 
+                  </p>
+                  <h4 id="known_issues">Known issues</h4>
+                  <p>
+                  <ul>
+                     <li><span style="color:darkblue">Pengines Scratchpad</span> works fine in Safari, Firefox and Chrome. It seems there are some problems with Internet Explorer.
+                     </li>
+                  </ul>
+                  </p>
+                  <h4 id="technology">Technology</h4>
+                  <p>
+                     <span style="color:darkblue">Pengines Scratchpad</span> is implemented in a combination of Prolog, HTML, CSS and JavaScript. The only framework used is <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a> and the choice of editor landed on the very capable <a target="_blank" href="http://ace.ajax.org/">ACE editor</a>. The server serves static HTML, CSS and JavaScript code only, none of that is dynamically generated on the server. Instead, to create behaviour, the main traffic between server and client consists of the JSON responses from the server guiding the transformation of the browser's DOM on the client side.
+                  </p>
+                  <h4 id="source_code">Source code</h4>
+                  <p>
+                     The source code for <span style="color:darkblue">Pengines Scratchpad</span> is available in the Pengines distribution on <a target="_blank" href="https://github.com/SWI-Prolog/pengines">GitHub</a>.
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Begin page content -->
+      <div class="container">
+         <pre id="editor"></pre>
+         <div id="console">
+            <div id="results">
+               <iframe id="presentation"></iframe>
+            </div>
+         </div>
+      </div>
+      <header class="navbar navbar-default navbar-fixed-bottom bs-docs-nav">
+         <div class="footer">
+            <p class="muted credit pull-left">
+               Powered by 
+               <a target="_blank" href="http://www.swi-prolog.org/">SWI-Prolog</a> 
+               and the 
+               <a target="_blank"href="http://www.swi-prolog.org/pldoc/doc_for?object=section%28%27packages/pengines.html%27%29">Pengines package</a>.
+            </p>
+            <input class="pull-right" id="slider" type='range' step='1' min='30' max='70' />
+         </div>
+      </header>
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="/vendor/jquery/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="/pengine/pengines.js" type="text/javascript" charset="utf-8"></script>
+      <script src="/vendor/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+      <script src="/apps/scratchpad/js/scratchpad.js" type="text/javascript" charset="utf-8"></script>
+      <script src="https://togetherjs.com/togetherjs-min.js"></script>
+   </body>
+</html>

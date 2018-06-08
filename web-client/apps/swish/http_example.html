@@ -1,0 +1,49 @@
+<html lang="en">
+ <head>
+     <script
+			  src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+ </head>
+ <body>
+  <script>
+     $.ajax({
+       url: "http://localhost:3051/pengine/spawn?options=[format('json-s')]",
+       success: handle
+     });
+     
+     function handle(event) {
+         if (event.type == "create") {
+             $.ajax({
+               url: "http://localhost:3051/pengine/ask?pid=" + event.pid + "&ask=member(X,[a,b,c])",
+               success: handle
+             })
+         } else if (event.type == "success") {
+             console.log(JSON.stringify(event.data));
+             if (event.more) {
+                 $.ajax({
+                   url: "http://localhost:3051/pengine/next?pid=" + event.pid,
+                   success: handle
+                 })
+             }
+         } 
+     }
+/*
+     ws.onmessage = function(message) {
+         var event = JSON.parse(message.data);
+         if (event.type == "spawned") {
+             ws.send("pengine_call('" + event.pid + "', member(X, [a,b,c]))");
+         } else if (event.type == "success") {
+             console.log(JSON.stringify(event.data));
+             if (event.more) {
+                 ws.send("pengine_next('" + event.pid + "')");
+             } else {
+                 ws.send("pengine_exit('" + event.pid + "')")
+             }
+         } else if (event.type == "exit") {
+             ws.close()
+         }
+     }; 
+*/
+  </script>
+ </body>
+</html>
+

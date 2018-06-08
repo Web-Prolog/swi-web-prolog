@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <!-- Meta, title, CSS, favicons, etc. -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>
+         Getting started · Pengines
+      </title>
+      <!-- Bootstrap core CSS -->
+      <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Documentation extras -->
+      <link href="manual_files/docs.css" rel="stylesheet">
+      <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+      <script src="../assets/js/respond.min.js"></script>
+      <![endif]-->
+      <!-- Favicons -->
+      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://getbootstrap.com/assets/ico/apple-touch-icon-144-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://getbootstrap.com/assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://getbootstrap.com/assets/ico/apple-touch-icon-72-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" href="http://getbootstrap.com/assets/ico/apple-touch-icon-57-precomposed.png">
+      <link rel="shortcut icon" href="http://getbootstrap.com/assets/ico/favicon.png">
+      <style>
+         li.L0, li.L1, li.L2, li.L3,
+         li.L5, li.L6, li.L7, li.L8
+         { list-style-type: decimal !important }
+         h3 {
+         margin-top: 40px;
+         }
+         h4 {
+         margin-top: 30px;
+         }
+         label {
+         font-weight: bold;
+         }
+         code {
+         color: black;
+         }
+         dd {
+         margin-left: 30px;
+         }
+      </style>
+      <style id="holderjs-style" type="text/css">.holderjs-fluid {font-size:16px;font-weight:bold;text-align:center;font-family:sans-serif;margin:0}</style>
+   </head>
+   <body style="" data-twttr-rendered="true">
+      <!-- Docs master nav -->
+      <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav">
+         <div class="container">
+            <div class="navbar-header">
+               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a href="/docs/index.html" class="navbar-brand">Pengines</a>
+            </div>
+            <nav class="collapse navbar-collapse bs-navbar-collapse">
+               <ul class="nav navbar-nav">
+                  <li class="active">
+                     <a href="/docs/getting_started.html">Getting started</a>
+                  </li>
+                  <li>
+                     <a href="/apps/scratchpad/index.html">Scratchpad</a>
+                  </li>
+                  <li>
+                     <a href="/apps/swish/index.html">SWISH</a>
+                  </li>
+                  <li>
+                     <a href="/docs/documentation.html">Docs</a>
+                  </li>                  
+                  <li>
+                     <a href="/admin/statistics.html">Stats</a>
+                  </li>
+                  <li>
+                     <a href="/admin/server">Admin</a>
+                  </li>
+               </ul>
+            </nav>
+         </div>
+      </header>
+      <!-- Docs page layout -->
+      <div class="bs-header" id="content">
+         <div class="container">
+            <h1>Getting started</h1>
+            <p>An overview of Pengines, how to download, install and use.</p>
+         </div>
+      </div>
+      <div class="container bs-docs-container">
+      <div class="row">
+      <div class="col-md-3">
+         <div class="bs-sidebar hidden-print affix-top">
+            <ul class="nav bs-sidenav">
+               <li class="active">
+                  <a href="#download-and-installation">How to download and install</a>
+                  <ul class="nav">
+                     <li><a href="#downloading">Download Pengines</a></li>
+                     <li><a href="#download-additional">Clone or fork Pengines</a></li>
+                     <li><a href="#installing">Install Pengines</a></li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="#pengine_administrator">The Pengines Administrator</a>
+                  <ul class="nav">
+                     <li><a href="#server_settings">Server settings</a></li>
+                     <li><a href="#app_settings">Application settings</a></li>
+                     <li><a href="#statistics">Statistics</a></li>
+                     <li><a href="#account">Account</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+      </div>
+      <div class="col-md-9">
+         <div class="bs-docs-section">
+            <div class="page-header">
+               <h1 id="download-and-installation">How to download and install</h1>
+            </div>
+            <p>First, ask yourself whether you really <em>need</em> to download and install the Pengines platform at this time. The platform is designed to allow online interaction with Prolog running in the cloud, and if you just want to check it out, you can probably do so without downloading and installing your own instance of the Pengines server. Indeed, you can skip this entire page and quickly move on to the fun parts, the <a href="/apps/scratchpad/index.html">Scratchpad</a> and the <a href="/apps/swish/index.html">SWISH</a> applications. The only area that you will not have access to is the password protected <a href="#pengine_administrator">Pengines Administrator</a>.</p>
+            <p>If on the other hand you want to develop a serious application on top of the Pengines platform, you will need access to the apps directory and the Administrator pages, and thus need to download and install the whole distribution. Allowing access to the Pengines server from <code>localhost</code> only is of course safe, but if you are thinking about opening up to the rest of the world, please consider the following safety information:</p>
+            <div class="bs-callout bs-callout-danger">
+               <p>We cannot at this time guarantee the safety of the Pengines platform. We <em>think</em> it is safe, but only if you know what you are doing. You run it at your own risk!</p>
+            </div>
+            <h3 id="downloading">Download Pengines</h3>
+            <p>Download the latest full source code.</p>
+            <p><a class="btn btn-lg btn-primary" href="https://github.com/SWI-Prolog/pengines/archive/master.zip">Download latest Pengines</a></p>
+            <h3 id="download-additional">Clone or fork Pengines</h3>
+            <div class="bs-docs-dl-options">
+               <p>Clone the entire project or fork your own version of Pengines to make it your own by visiting us on GitHub.</p>
+               <p><a class="btn btn-lg btn-primary" href="https://github.com/SWI-Prolog/pengines">Clone or fork via GitHub</a>
+            </div>
+            <h3 id="installing">Install Pengines</h3>
+            <p>Basic installation merely requires installing a recent version (>= 7.1.5) of
+               <a href="http://www.swi-prolog.org" target="_blank">SWI-Prolog</a> and unpacking the Pengines platform
+               below.
+            </p>
+            <p>Start <code>run.pl</code> as <code>./run.pl</code> on Unix or double-click <code>run.pl</code>
+               on Windows and direct your browser to the indicated address (default
+               is <a href="http://localhost:3030/">http://localhost:3030/</a>). You are now looking at the Pengines home page and should be able to use Scratchpad and SWISH and run all the examples. If you click Admin on the home page, you will be asked to enter a user name and a
+               password, and if this is the first time you use Pengines you should use "admin" for both. You will end up on the Server settings page.
+            </p>
+            <div class="bs-callout bs-callout-danger">
+               <p>You most likely want to 
+                  change the admin password right away. Clicking the Account link will get you 
+                  to a page that will allow you to do just that.
+               </p>
+            </div>
+         </div>
+         <div class="bs-docs-section">
+            <div class="page-header">
+               <h1 id="pengine_administrator">The Pengines Administrator</h1>
+            </div>
+            <p>The Pengines Administrator is a password protected area that allows the owner of a Pengines server instance to change the settings of applications as well as of the server itself. It also features a statistics page where statistics of the workings of the systems is presented as well as an account page where the admin password can be changed.</p>
+            <h3 id="server_settings">Server settings</h3>
+            <p>The Pengines Administrator's server settings page gives an overview of various settings related to the operation of the server. This is where you set the various timeouts related to the system. It is also where you decide if your application should allow <em>Cross-origin resource sharing</em> (CORS). Here is a picture of the Server settings page:</p>
+            <img src="manual_files/server_settings.jpg" alt="..." class="img-rounded">
+            <h3 id="app_settings">Application settings</h3>
+            <p>The Pengines Administrator's application settings page is where the settings for pengines run by individual applications can be inspected and changed. Here is a screen dump depicting the application settings page:</p>
+            <img src="manual_files/app_settings.jpg" alt="..." class="img-rounded">                       
+            <h3 id="statistics">Statistics</h3>
+            <p>The Pengines Administrator's statistics page gives an overview of various statistics related to the operation of the server. Here is a picture of the Statistics page:</p>
+            <img src="manual_files/statistics.jpg" alt="..." class="img-rounded">
+            <p>Note that the Statistics page is available from the Pengines home page as well. If you prefer not to show it there you will need to comment out the relevant links in the files docs/index.html, docs/getting_started.html and docs/documentation.html.</p>
+            <h3 id="account">Account</h3>
+            <p>The Pengines Administrator's account page allows you to change the admin password. Here is a picture of the Account page:</p>
+            <img src="manual_files/account.jpg" alt="..." class="img-rounded">
+         </div>
+      </div>
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="../vendor/jquery/jquery-2.0.3.min.js"></script>
+      <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+      <script src="manual_files/widgets.js"></script>
+      <script src="manual_files/holder.js"></script>
+      <script src="manual_files/application.js"></script>
+   </body>
+</html>

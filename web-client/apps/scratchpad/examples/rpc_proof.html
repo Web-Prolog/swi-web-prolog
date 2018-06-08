@@ -1,0 +1,98 @@
+<html lang="en">
+    <head>
+        <script src="/vendor/jquery/jquery-2.0.3.min.js"></script>
+        <script src="/pengine/pengines.js"></script>
+        <script src="/apps/scratchpad/examples/svg-tree-drawer.js"></script>
+        <style>
+            /* Tree */
+            svg {
+                margin: 0 auto;
+            }
+            svg text {
+            	padding: 5px;
+            }
+            svg polyline,
+            svg text {
+            	font-family: monospace !important;
+            	font-size: 14px !important;
+            }
+            svg text {
+            	padding-left: 0.6em !important;
+            	padding-right: 0.6em !important;
+            }
+            
+        </style>
+        <script type="text/x-prolog">
+
+            prove(true, json{label:true}) :- !.
+            prove(pengine_rpc(URL, Bs, Opts), Proof) :- !,
+                pengine_rpc(URL, prove(Bs, Proof0), [
+                    src_predicates([prove/2, prove_body/2])
+                    | Opts
+                ]),
+                get_dict(label, Proof0, Label),
+                atomic_list_concat([Label, URL], ' @ ', Node),
+                get_dict(children, Proof0, Children),
+                Proof = json{label:Node, children:Children}.
+            prove(H, Proof) :-
+                clause(H, Bs),
+                prove_body(Bs, BSProof),
+                term_to_atom(H, HA),
+                Proof = json{label:HA, children:BSProof}.
+
+            prove_body((B, Bs), [BT|BTs]) :- !,
+                prove(B, BT),
+                prove_body(Bs, BTs).
+            prove_body(B, [BT]) :-
+                prove(B, BT).
+
+
+            good_pet(X) :- bird(X), small(X).
+            good_pet(X) :- cuddly(X), yellow(X).
+
+            bird(X) :-
+                pengine_rpc('http://pengines.swi-prolog.org', has_feathers(X), [
+                     src_text("has_feathers(tweety) :- p, q. p. q.")
+                ]),
+                tweets(X).
+
+            yellow(tweety).
+            tweets(tweety).
+            small(tweety).
+            cuddly(tweety).
+
+        </script>
+        <script>
+            var treedrawer;
+            var pengine = new Pengine({
+                oncreate: handleCreate,
+                onsuccess: handleSuccess,
+                onerror: handleError
+            });
+            function handleCreate() {
+                pengine.ask('prove(good_pet(tweety), Proof)')
+            }
+            function handleSuccess() {	
+                treedrawer.draw(this.data[0].Proof);
+                if ( !this.more ) {
+                   $('#next').prop("disabled",true);
+                }
+            }
+            function handleError() {
+                $('#error').html("Error: "+this.data);
+            }
+            
+            window.onload = function() {
+                treedrawer = new TreeDrawer('proof');
+            }
+    
+        </script>
+    </head>
+    <body>
+        <div id="proof"></div>
+        <div id="error"></div>
+        <div>
+        	<button id="next" onclick="pengine.next()">Next</button>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Pengine Admin</title>
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+        <script type="text/javascript" src="/vendor/jquery/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!-- Custom styles for this template -->
+        <link href="css/admin.css" rel="stylesheet">
+        <style>
+            th {
+            font-size: 100%;
+            background-color: lightblue;
+            color: black;
+            }
+        </style>
+        <script type="text/javascript">
+	    function server_statistics_table(obj) {
+                var html = '<table class="table table-bordered table-condensed"><tbody>';
+                html += '<tr><th>Port</th><th>Started</th><th>CPU usage</th><th># workers</th><th># requests</th><th>Bytes sent</th></tr>';
+                for (var i in obj.servers) {
+                    var port = obj.servers[i].port;
+                    var started = obj.servers[i].started;
+                    var cputime = obj.servers[i].cputime + " seconds";
+                    var workers = obj.servers[i].workers;
+                    var requests = obj.requests;
+                    var bytes_sent = obj.bytes_sent;
+                    html += '<tr><td>'+port+'</td><td>'+started+'</td><td>'+cputime+'</td><td>'+workers+'</td><td>'+requests+'</td><td>'+bytes_sent+'</td></tr>';
+                }
+                html += '</tbody></table'
+                return html;
+	    }
+	    function pengine_statistics_table(pengines) {
+                var html = '<table class="table table-bordered table-condensed"><tbody>';
+                html += '<tr><th>Application</th><th>CPU usage</th><th>Global stack</th><th>Local stack</th><th>Trail Stack</th></tr>';
+                for (var i in pengines) {
+		    if ( pengines[i].type === 'local' ) {
+                        var application = pengines[i].application;
+                        var cputime     = pengines[i].cputime + " seconds";
+                        var global      = pengines[i].stacks.global;
+                        var local       = pengines[i].stacks.local;
+                        var trail       = pengines[i].stacks.trail;
+                        html += '<tr><td>'+application+'</td><td>'+cputime+'</td><td>'+global+'</td><td>'+local+'</td><td>'+trail+'</td></tr>';
+		    }
+                }
+                html += '</tbody></table'
+                return html;
+	    }
+
+            function reload() {
+                window.location.reload();
+                setTimeout(reload, 10000);
+            }
+
+            function start() {
+                $.get('/statistics', function(obj) {
+                    $('#server-statistics').html(server_statistics_table(obj));
+		    $('#pengine-statistics').html(pengine_statistics_table(obj.pengines));
+                });
+                setTimeout(reload, 10000);
+            }
+
+        </script>
+    </head>
+    <body onload="start()">
+        <div class="container-narrow">
+            <div class="header">
+                <ul class="nav nav-pills pull-right">
+                    <li><a href="/admin/server.html">Server</a></li>
+                    <li><a href="/admin/applications.html">Applications</a></li>
+                    <li class="active"><a href="#">Statistics</a></li>
+                    <li><a href="/admin/account.html">Account</a></li>
+                </ul>
+                <h3 class="text-muted"><a href="/docs/index.html">Pengines</a> Administrator</h3>
+            </div>
+            <h3>Server data</h3>
+            <div id="server-statistics"></div>
+            <h3>Pengines</h3>
+            <div id="pengine-statistics"></div>
+            <div class="footer">
+            </div>
+        </div>
+        <!-- /container -->
+    </body>
+</html>

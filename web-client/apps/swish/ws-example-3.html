@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Example 3</title>
+    <script>
+      var ws = new WebSocket('ws://localhost:3060/ws','pcp-0.2');
+      ws.onopen = function (message) {
+        ws.send(JSON.stringify({
+          command: 'self'
+        }));
+      };
+      ws.onmessage = function (message) {
+        var event = JSON.parse(message.data);
+        if (event.type == 'self') {
+            ws.send(JSON.stringify({
+              command: '!',
+              name: 'pubsub_service',
+			  message: "subscribe(" + event.pid + ")"
+            }));
+        } else if (event.$type == 'msg') {
+          document.getElementById("output").innerHTML += 
+              JSON.stringify(event.text) + "<br/>";
+        }
+      };   
+    </script>
+  </head>
+  <body>
+    <div id="output"></div>
+  </body>
+</html>
+
+      

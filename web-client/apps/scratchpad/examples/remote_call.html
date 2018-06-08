@@ -1,0 +1,39 @@
+<html lang="en">   
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <script type="text/javascript" src="/vendor/jquery/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="/pengine/pengines.js"></script>
+        <script type="text/x-prolog">
+
+            test :- 
+                pengine_output('<hr>Test 1<hr>'),
+                pengine_rpc('http://pengines.swi-prolog.org', member(X, [a, b, c])),
+                pengine_output(X),
+                fail.
+            test :- 
+                pengine_output('<hr>Test 2<hr>'),
+                pengine_rpc('http://pengines.swi-prolog.org', a(X), [
+                    src_text("a(1). a(2). a(3).")
+                ]),
+                pengine_output(X),
+                fail.
+            test :- 
+                pengine_output('<hr>End of tests<hr>').
+                
+        </script>
+        <script type="text/javascript">
+            var pengine = new Pengine({
+                ask: 'test',
+                onoutput: handleOutput
+            });
+            function handleOutput() {
+                $("#out").append("<p>" + this.data + "</p>");
+            }
+        </script>
+    </head>
+    <body>
+        <center style="margin-top:50px;">
+            <div id="out"></div>
+        </center>
+    </body>
+</html>

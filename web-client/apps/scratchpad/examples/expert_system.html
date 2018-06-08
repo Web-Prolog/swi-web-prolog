@@ -1,0 +1,68 @@
+<html lang="en">   
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <script type="text/javascript" src="/vendor/jquery/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="/pengine/pengines.js"></script>
+        <script type="text/x-prolog">
+
+            prove(true) :- !.
+            prove((B, Bs)) :- !,
+                prove(B),
+                prove(Bs).
+            prove(H) :-
+                clause(H, B),
+                prove(B).
+            prove(H) :-
+                askable(H),
+                term_to_atom(H, Prompt),
+                pengine_input(Prompt, Answer),
+                Answer = yes.
+            
+            
+            good_pet(X) :- bird(X), small(X).
+            good_pet(X) :- cuddly(X), yellow(X).
+            
+            bird(X) :- has_feathers(X), tweets(X).
+            
+            yellow(tweety).
+            
+            askable(tweets(_)).
+            askable(small(_)).
+            askable(cuddly(_)).
+            askable(has_feathers(_)).
+                
+        </script>
+        <script type="text/javascript">
+            var pengine = new Pengine({
+                ask: 'prove(good_pet(tweety))',
+                onprompt: handlePrompt,
+                onsuccess: handleSuccess,
+                onfailure: handleFailure,
+                onerror: handleError
+            });
+            function handlePrompt() {
+                $("#msg").html("<h1>" + this.data + "?</h1>");
+            }
+            function handleSuccess() {
+                $("#msg").html("<h1>Yes!</h1>");
+                $("#next").prop("disabled", false);
+            }
+            function handleFailure() {
+                $("#msg").html("<h1>No!</h1>");
+            }
+            function handleError() {
+                $("#err").html("<h4>" + this.data + "</h4>");
+            }
+        </script>
+    </head>
+    <body>
+        <center style="margin-top:200px;">
+            <div>Is <i>good_pet(tweety)</i> true?</div>
+            <div id="msg"></div>
+            <button onclick="pengine.respond('yes')">Yes</button>
+            <button onclick="pengine.respond('no')">No</button>
+            <button id="next" onclick="pengine.next()" disabled>Next</button>
+            <div id="err"></div>
+        </center>
+    </body>
+</html>

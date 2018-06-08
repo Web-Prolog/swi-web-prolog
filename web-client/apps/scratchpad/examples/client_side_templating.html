@@ -1,0 +1,85 @@
+
+<!-- 
+Here, handlebars.js (http://handlebarsjs.com/) provides us with client-side templating.
+-->
+<html lang="en">   
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <script type="text/javascript" src="/vendor/jquery/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="/vendor/handlebars/handlebars.js"></script>
+        <script type="text/javascript" src="/pengine/pengines.js"></script>
+        <style type="text/css">
+            table {
+                font-family: monotype;
+                font-size: 16px;
+                border-width: 1px;
+                border-collapse: collapse;
+            }
+            table th {
+                padding: 8px;
+                border-width: 1px;
+                border-style: solid;
+                background-color: #dedede;
+            }
+            table td {
+                border-width: 1px;
+                padding: 8px;
+                border-style: solid;
+            }
+        </style>
+        <script id="myTemplate" type="text/x-handlebars-template">
+            <table>
+                <thead>
+                    <th>Name</th>
+                    <th>Ancestor</th>
+                </thead>
+                <tbody>
+                    {{#rows}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{ancestor}}</td>
+                        </tr>
+                    {{/rows}}
+                </tbody>
+            </table>
+        </script>
+        <script type="text/x-prolog">
+    
+            ancestor_of(X, Y) :- parent_of(X, Y).
+            ancestor_of(X, Z) :- parent_of(X, Y), ancestor_of(Y, Z).
+                        
+            parent_of(X, Y) :- father_of(X, Y).
+            parent_of(X, Y) :- mother_of(X, Y).
+            
+            mother_of(trude, sally).
+            
+            father_of(tom, sally).
+            father_of(tom, erica).
+            father_of(mike, tom).
+            
+            
+            table(json([rows=SortedRows])) :-
+                findall(json([name=N, ancestor=A]), ancestor_of(A, N), Rows),
+                sort(Rows, SortedRows).
+                         
+        </script>
+        <script type="text/javascript">
+            var template = $('#myTemplate').html();
+            var compiledTemplate = Handlebars.compile(template);
+            
+            pengine = new Pengine({
+                oncreate: handleCreate,
+                onsuccess: applyTemplate
+            })
+            function handleCreate() {
+                pengine.ask('table(Table)');
+            }            
+            function applyTemplate() {
+                var result = compiledTemplate(this.data[0].Table);
+                $('body').html(result)
+            }
+            
+        </script>
+    </head>
+    <body></body>
+</html>

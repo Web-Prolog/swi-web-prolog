@@ -1,0 +1,90 @@
+
+/* Fixing the search box
+-------------------------------------------------- */
+
+div.ace_search_options {
+    float: right;
+}
+
+button.ace_replacebtn {
+    margin-left: -6px;
+    font-size: 80%;
+
+}
+
+pre {
+    /*background-color: #f9f2f4;*/
+}
+
+code {
+    color: black;
+    background-color: #f5f5f5;
+}
+
+/* Application CSS
+-------------------------------------------------- */
+
+
+#editor, #tutorial {
+    margin: 0;
+    position: absolute;
+    top: 50px;
+    bottom: 50px;
+    right: 50%;
+    left: 0;
+    border-bottom: none;
+    display: none;
+}
+
+#tutorial {
+    padding: 16px;
+    overflow-y: scroll;
+    display: block;
+}
+	
+		
+#shell {
+    position: absolute;
+    top: 50px;
+    bottom: 120px;
+    right: 0;
+    width: 50%;
+}
+
+#controls {
+    position: absolute;
+    bottom: 50px;
+    width: 50%;
+    right: 0;
+    padding: 18px;
+    border-top: 1px solid gray;
+    background-color: #f5f5f5;
+}
+
+.navbar-fixed-bottom {
+    border-top: 2px solid #E5E5E5;
+}
+
+.footer {
+    text-align: center;
+    margin: 14px;
+}
+
+
+legend {
+    font-size: 16px;
+    line-height: 32px;
+    margin-bottom: 12px;
+    color: darkblue;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.preference-menu {
+    width: 120px;
+}
+
+#slider {
+    margin-top: 3px;
+    width: 80px;
+}
+

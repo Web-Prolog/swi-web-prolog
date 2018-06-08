@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>Genealogist</title>
+      <meta name="author" content="Torbjörn Lager">
+      <link rel="stylesheet" href="genealogist.css">
+  </head>
+  <body>
+      <h1>The Genealogist</h1>
+      <!-- Here starts the part of the GUI that was already in part 2 -->
+      <h3>Query</h3>
+      <div>
+          <select id="sample-queries">
+              <option selected disabled>Sample queries</option>
+              <option>ancestor_descendant(X, Y)</option>
+              <option>siblings(X, Y)</option>
+              <option>parent_child(X, Y)</option>
+              <option>father_child(X, Y)</option>
+              <option>mother_child(X, Y)</option>
+          </select>
+      </div>
+      <div>
+          <input id="query" type="text" placeholder="Query">
+      </div>
+      <div>
+          <button id="ask-btn">Ask</button>
+          <button id="next-btn" disabled>Next</button>
+          <button id="stop-btn" disabled>Stop</button>
+          <button id="abort-btn" disabled>Abort</button>
+          <button id="clear-btn">Clear</button>
+      </div>
+      <!-- Here start the new part for updating the application db -->
+      <h3>Update</h3>
+      <div>
+          <input id="X" class="arg" type="text" placeholder="Parent">
+          <input id="Y" class="arg" type="text" placeholder="Child">
+      </div>
+      <div>
+          Parent is:
+          <input class="radio" type="radio" name="sex" value="father_child" checked>Male
+          <input class="radio" type="radio" name="sex" value="mother_child">Female
+      </div>
+      <div>
+          <button id="assert-btn">Assert</button>
+          <button id="retract-btn">Retract</button>
+      </div>
+      <h3>Output</h3>
+      <div id="output"></div>
+      <!-- Placed at the end of the document so that page loads faster -->
+      <script src="../../www/vendor/jquery/jquery-2.0.3.min.js"></script>
+      <script src="genealogist.js"></script>
+  </body>
+</html>

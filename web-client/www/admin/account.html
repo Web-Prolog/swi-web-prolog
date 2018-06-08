@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Pengine Admin</title>
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+        <script type="text/javascript" src="/vendor/jquery/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!-- Custom styles for this template -->
+        <link href="css/admin.css" rel="stylesheet">
+        <script type="text/javascript">
+            function change_passwd() {
+                var password = $("#password").val();
+                var password_confirm = $("#password_confirm").val();
+                if (password === password_confirm) {
+                    $.get('/admin/change_passwd?passwd='+password, function(obj) {
+                        if (obj.ok) {
+                            $("#message").html('<div class="alert alert-success">The admin password has been changed.</div>');
+                            setTimeout(function () {$("#message").html("")}, 3000);
+                        }
+                    })
+                } else {
+                    $("#message").html('<div class="alert alert-danger"><strong>Error: </strong>Passwords did not match.</div>');
+                    $("#password").val("");
+                    $("#password_confirm").val("");
+                    setTimeout(function () {$("#message").html("")}, 3000);
+                }
+            }
+            
+        </script>
+    </head>
+    <body>
+        <div class="container-narrow">
+            <div class="header">
+                <ul class="nav nav-pills pull-right">
+                    <li><a href="/admin/server.html">Server</a></li>
+                    <li><a href="/admin/applications.html">Applications</a></li>
+                    <li><a href="/admin/statistics.html">Statistics</a></li>
+                    <li class="active"><a href="/admin/account.html">Account</a></li>
+                </ul>
+                <h3 class="text-muted"><a href="/docs/index.html">Pengines</a> Administrator</h3>
+            </div>
+            <div class="form-horizontal" action='' method="post">
+                <div id="legend">
+                    <legend class="">Change admin password</legend>
+                </div>
+                <div class="control-group">
+                    <!-- Password-->
+                    <label class="control-label" for="password">New password</label>
+                    <div class="controls">
+                        <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                        <p class="help-block">
+                            Password should be at least 5 characters
+                        </p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <!-- Password -->
+                    <label class="control-label" for="password_confirm">New password (Confirm)</label>
+                    <div class="controls">
+                        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
+                        <p class="help-block">
+                            Please confirm password
+                        </p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <!-- Button -->
+                    <div class="controls">
+                        <button class="btn btn-primary" onclick="change_passwd()">Change password</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div id="message"></div>
+                </div>
+            </div>
+            <p></p>
+            <div class="footer">
+            </div>
+        </div>
+        <!-- /container -->
+    </body>
+</html>

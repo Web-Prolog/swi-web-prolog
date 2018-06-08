@@ -1,0 +1,134 @@
+
+<html lang="en">   
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	    <title>Eight Queens Demo</title>
+	    <meta name="author" content="Torbjörn Lager and Jan Wielmaker">
+	    <script type="text/javascript" src="/vendor/jquery/jquery-2.0.3.min.js"></script>
+	    <script type="text/javascript" src="/pengine/pengines.js"></script>
+	    <script type="text/x-prolog">
+	    
+	        /*  queens(+N, -Queens) is nondet.
+	        	@author Richard A. O'Keefe (The Craft of Prolog)
+	        */
+	
+	        queens(N, Queens) :-
+	            length(Queens, N),
+	        	board(Queens, Board, 0, N, _, _),
+	        	queens(Board, 0, Queens).
+	
+	        board([], [], N, N, _, _).
+	        board([_|Queens], [Col-Vars|Board], Col0, N, [_|VR], VC) :-
+	        	Col is Col0+1,
+	        	functor(Vars, f, N),
+	        	constraints(N, Vars, VR, VC),
+	        	board(Queens, Board, Col, N, VR, [_|VC]).
+	
+	        constraints(0, _, _, _) :- !.
+	        constraints(N, Row, [R|Rs], [C|Cs]) :-
+	        	arg(N, Row, R-C),
+	        	M is N-1,
+	        	constraints(M, Row, Rs, Cs).
+	 
+	   		queens([], _, []).
+	        queens([C|Cs], Row0, [Col|Solution]) :-
+	        	Row is Row0+1,
+	        	select(Col-Vars, [C|Cs], Board),
+	        	arg(Row, Vars, Row-Row),
+	        	queens(Board, Row, Solution).
+	    
+	    </script>
+	    <style type="text/css" media="screen">
+	        #board {
+	            width: 400px;
+	            height: 400px;
+	            border: 20px groove #630;
+	        }
+	        .row {
+	            width: 100%;
+	        }
+	        .square {
+	            float: left;
+	        }
+	        .odd {
+	            background-color: #E4E4E4;
+	        }
+	        .even {
+	            background-color: #8A4117;
+	        }
+	        .square-img {
+	            width:100%;
+	            height:100%;
+	        }
+	    </style>
+	    <script type="text/javascript">
+	        var boardsize = 8;
+	        var boardwidth = 400;
+	        var pengine = new Pengine({
+	            onsuccess: handleSuccess,
+	            onfailure: handleFailure,	            
+	            onerror:   handleError
+	        });
+	        function board(size, width) {
+	            var board = "";
+	            var fieldsize = Math.floor(width/size);
+	            for(var i=1; i<=size; i++) {
+	                board += row(i, size, fieldsize);
+	            }
+	            $("#board").html(board);
+	        }
+	        function row(n, size, fieldsize) {
+	            var y = fieldsize * (n-1);
+	            var row = "<div class='row' style='top:"+y+"px; left:0px;'>\n";
+	            for ( var i=1; i<=size; i++ ) {
+	                var id = i+"-"+n;
+	                var oe = (i+n)%2 == 0 ? "even" : "odd";
+	                row += "<div id='"+id+"' class='square "+oe +
+	                   "' style='width:"+fieldsize+"px; height:"+fieldsize+"px'></div>\n";
+	            }
+	            row += "</div>\n";
+	            return row;
+	        }
+	        function clearBoard() {
+	            for (var i = 1; i <= boardsize; i++) {
+	                for (var j = 1; j <= boardsize; j++) {
+	                    $("#"+i+"-"+j).html("");
+	                }
+	            }
+	        }
+	        function setQueens(squareList) {
+	            for (var i = 1; i <= boardsize; i++) {
+	                var id = i+"-"+squareList[i-1];
+	                $("#"+id).html("<img src='/apps/scratchpad/examples/queen.png' class='square-img'/>");
+	            }
+	        }
+	        function handleSuccess() {
+	            clearBoard();
+	            setQueens(this.data[0].Queens);
+	        }
+	        function handleFailure() {
+	            $("#msg").html('No more solutions');
+	        }	        
+	        function handleError() {
+	            $("#msg").html(this.data);
+	        }
+	        function query() {
+	            $("#msg").html("");
+	            pengine.ask('queens(8, Queens)');
+	        }
+	        function next() {
+	            pengine.next();            
+	        }
+	    </script>
+	</head>
+	<body onload="board(boardsize, boardwidth)">
+	    <center style="margin-top:20px;">
+	    	<div id="board"></div>
+	    	<div style="margin-top:20px;">
+	        	<button id="first" onclick="query()">First</button>
+	        	<button id="next" onclick="next()">Next</button>
+	        	<div style="margin-top:20px;" id="msg"></div>
+	        </div> 
+	    </center>
+	</body>
+</html>

@@ -1,0 +1,141 @@
+/* Fixing the search box
+-------------------------------------------------- */
+
+div.ace_search_options {
+    float: right;
+}
+
+button.ace_replacebtn {
+    margin-left: -6px;
+    font-size: 80%;
+
+}
+
+
+
+/* Application CSS
+-------------------------------------------------- */
+
+#editor { 
+    margin: 0;
+    position: absolute;
+    top: 50px;
+    bottom: 40px;
+    right: 50%;
+    left: 0;
+    border-bottom: none;
+
+}
+
+#results {
+    position: absolute;
+    top: 50px;
+    bottom: 50px;
+    right: 0;
+    width: 50%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+#presentation {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+
+
+
+code {
+	font-size: 85%;
+}
+
+#run-btn,
+#save-btn,
+#update-btn,
+#share-btn, 
+#collaborate-btn {
+    margin: 8px 4px;
+}
+
+#run-btn {
+    margin-left: 18px;
+}
+
+
+/* Application CSS
+-------------------------------------------------- */
+
+
+
+#editor { 
+    position: absolute;
+    top: 50px;
+    bottom: 50px;
+    right: 50%;
+    left: 0;
+    border-bottom: none;
+
+}
+
+#console {
+    position: absolute;
+    top: 50px;
+    bottom: 50px;
+    right: 0;
+    width: 50%;
+}
+
+#results {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+#presentation {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+
+.navbar-fixed-bottom {
+    border-top: 1px solid #E5E5E5;
+}
+
+.footer {
+    text-align: center;
+    margin: 14px;
+}
+
+
+#slider {
+    margin-top: 3px;
+    width: 80px;
+}
+
+
+legend {
+    font-size: 16px;
+    line-height: 32px;
+    margin-bottom: 12px;
+    color: darkblue;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.preference-menu {
+    width: 120px;
+}
+
+
+
+
+
+
+
+
+

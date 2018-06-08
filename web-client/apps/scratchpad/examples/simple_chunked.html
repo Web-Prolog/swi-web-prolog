@@ -1,0 +1,31 @@
+<html lang="en">   
+    <head>
+        <script src="/vendor/jquery/jquery-2.0.3.min.js"></script>
+        <script src="/pengine/pengines.js"></script>
+        <script type="text/x-prolog">
+        
+    	   q(X) :- p(X).
+           
+		   p(a). p(b). p(c). p(d). p(e). p(f). p(g).
+
+        </script>
+        <script>
+            var pengine = new Pengine({
+                ask: 'q(X)',
+                template: 'X',
+                chunk: 3,           // chunks of three answers
+                onsuccess: handleSuccess
+            });
+            function handleSuccess() {
+                $('#out').html(this.data);
+                if ( !this.more ) {
+                   $('#next').prop("disabled", true);
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="out"></div>
+        <button id="next" onclick="pengine.next()">Next</button>
+    </body>
+</html>

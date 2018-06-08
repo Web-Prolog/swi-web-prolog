@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Web Prolog</title>
+        <meta name="description" content="">
+        <meta name="author" content="Torbjörn Lager">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- CSS -->
+        <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/apps/swish/css/swish.css">
+        <link rel="stylesheet" href="/apps/swish/css/jquery.terminal.css"/>
+        <link rel="shortcut icon" href="/favicon.ico">
+    </head>
+    <body>
+        <header class="navbar navbar-default navbar-fixed-top">
+            <div class="container pull-left">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img style="position:absolute;top:4px;left:4px;" src="/apps/swish/img/logo.png"></a>
+                    <a href="/" style="margin-left:30px;font-size:24px" class="navbar-brand"><b><span style="color:maroon">Web Prolog</span></b></a>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse pull-left">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">File<b class="caret"></b></a>
+                            <ul id="file-menu" class="dropdown-menu">
+                                <li><a id="new">New</a></li>
+                                <li class="divider"></li>
+                                <li><a id="save">Save</a></li>
+                                <li class="divider"></li>
+                                <li><a id="share">Share...</a></li>
+                                <li class="divider"></li>
+                                <li><a id="prefs">Preferences...</a></li>
+                                <li class="divider"></li>
+                                <li><a id="print">Print...</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit<b class="caret"></b></a>
+                            <ul id="edit-menu" class="dropdown-menu">
+                                <li><a id="undo">Undo</a></li>
+                                <li><a id="redo">Redo</a></li>
+                                <li class="divider"></li>
+                                <li><a id="indent">Indent</a></li>
+                                <li><a id="outdent">Outdent</a></li>
+                                <li class="divider"></li>
+                                <li><a id="comment">Toggle comment</a></li>
+                                <li class="divider"></li>
+                                <li><a id="find">Find and replace...</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples<b class="caret"></b></a>
+                            <ul id="example-menu" class="dropdown-menu">
+                                <li><a id="tut">Tutorial</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/apps/swish/examples/kb.pl">Knowledge bases</a></li>
+                                <li><a href="/apps/swish/examples/lists.pl">List processing</a></li>
+                                <li><a href="/apps/swish/examples/io.pl">Read and write</a></li>
+                                <li><a href="/apps/swish/examples/database.pl">Assert and retract</a></li>
+                                <li><a href="/apps/swish/examples/movies.pl">Movie database</a></li>
+                                <li><a href="/apps/swish/examples/grammar.pl">DCG grammar</a></li>
+                                <!--<li><a href="/apps/swish/examples/eliza.pl">Eliza</a></li>-->
+                                <li><a href="/apps/swish/examples/expert-system.pl">Expert system</a></li>
+                                <!--<li><a href="/apps/swish/examples/queens.pl">Queens</a></li>-->
+                                <li><a href="/apps/swish/examples/clpfd-sudoku.pl">Sudoku (clp(fd))</a></li>
+                                <li><a href="/apps/swish/examples/japanese.pl">Japanese source</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/apps/swish/examples/priority_queue.pl">Priority queue</a></li>
+                                <li><a href="/apps/swish/examples/fridge.pl">Fridge simulation</a></li>
+                                <li><a href="/apps/swish/examples/pingpong.pl">Playing ping-pong</a></li>
+                                <li><a href="/apps/swish/examples/process_ring.pl">Process ring</a></li>
+                                <li><a href="/apps/swish/examples/philosophers.pl">Dining philosophers</a></li>
+                                <li><a href="/apps/swish/examples/hotswapping.pl">Hotswapping code</a></li>
+                                <li><a href="/apps/swish/examples/chat_client.pl">Chat client</a></li>
+                                <li><a href="/apps/swish/examples/simple_pengine.pl">Simple pengine</a></li>
+                                <li><a href="/apps/swish/examples/simple_rpc.pl">Simple RPC</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#about" data-toggle="modal">About...</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div id="preferences" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 id="myModalLabel">Preferences</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                          <legend>General</legend>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="theme-menu">Theme </label>
+                              <select id="theme-menu" class="input-sm preference-menu">
+                                  <option value="brain">Brain</option>
+                              </select>
+                          </div>
+                          <legend>Editor</legend>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="font-family-menu">Font family </label>
+                              <select id="font-family-menu" class="input-sm preference-menu">
+                                  <option value="'andale mono',monospace">Andale Mono</option>
+                                  <option value="consolas,monospace">Consolas</option>
+                                  <option selected value="'courier new',monospace">Courier New</option>
+                                  <option value="courier,monospace">Courier</option>
+                                  <option value="monaco,monospace">Monaco</option>
+                                  <option value="menlo,monospace">Menlo</option>
+                                  <option value="'ubuntu mono',monospace">Ubuntu Mono</option>
+                                  <option value="'dejavu',monospace">Dejavu</option>
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="font-size-menu">Font size </label>
+                              <select id="font-size-menu" class="input-sm preference-menu">
+                                  <option value="10">10</option>
+                                  <option value="12">12</option>
+                                  <option selected value="14">14</option>
+                                  <option value="16">16</option>
+                                  <option value="18">18</option>
+                                  <option value="20">20</option>
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="tab-size-menu">Tab size </label>
+                              <select id="tab-size-menu" class="input-sm preference-menu">
+                                  <option value="2">2</option>
+                                  <option selected value="4">4</option>
+                                  <option value="6">6</option>
+                                  <option value="8">8</option>
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="tab-soft-checkbox">Use soft tabs</label>
+                              <input id="tab-soft-checkbox" class="input-sm" checked type="checkbox">
+                          </div>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="line-wrap-checkbox">Lines</label>
+                              <label class="checkbox-inline"><input id="line-wrap-checkbox" checked type="checkbox" class=""> Wrap</label>
+                              <label class="checkbox-inline"><input id="line-highlight-checkbox" type="checkbox"> Highlight current</label>
+                              <label class="checkbox-inline"><input id="line-numbering-checkbox" checked type="checkbox"> Show numbers</label>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="share-dialog" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h3 id="myModalLabel">Share your program!</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>Your program is saved to the <span style="color:maroon">Web Prolog</span> node for a period of at least one month. A link to it is given below. Copy the link, send it around, do what you want with it. Anyone in possession of the link will be able to access <span style="color:maroon">Web Prolog</span> with your program loaded and ready to run.</p>
+                        <p>
+                            Link: <input style="width:520px;" class="input-sm" type="text" id="url" onclick="this.select()" value="">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="about" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 id="myModalLabel2">About <span style="color:maroon">Web Prolog</span><span class="pull-right">Version 0.1&nbsp;&nbsp;</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>This is a proof-of-concept online demonstration and tutorial of <span style="color:maroon">Web Prolog</span>, a proposal for a web logic programming language. Design and implementation by Torbjörn Lager, with a lot of help from Jan Wielemaker.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <pre id="editor"></pre>
+            <div id="tutorial-container"></div>
+            <div id="shell"></div>
+            <div id="controls" onclick="return false">
+                <div>
+                    <div>
+                        <div>
+                            <button id="ask-btn" class="btn btn-xs btn-primary">Ask</button>
+                            <button id="next-btn" class="btn btn-xs btn-success" disabled>Next</button>
+                            <button id="stop-btn" class="btn btn-xs btn-warning" disabled>Stop</button>
+                            <button id="abort-btn" class="btn btn-xs btn-danger" disabled>Abort</button>
+                            &nbsp;&nbsp;&nbsp;
+                            <div class="btn-group dropup">
+                                <button id="examples-btn" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" disabled>
+                                Examples
+                                <span class="caret"></span>
+                                </button>
+                                <ul id="examples" class="dropdown-menu">
+                                </ul>
+                            </div>
+                            <div class="btn-group dropup">
+                                <button id="history-btn" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                History
+                                <span class="caret"></span>
+                                </button>
+                                <ul id="history" class="dropdown-menu"></ul>
+                            </div>
+                            &nbsp;&nbsp;
+                            <label class="checkbox-inline"><input id="json-trace-checkbox" type="checkbox"> Trace JSON</label>
+                            <div class="btn-group pull-right">
+                                <button id="clear-btn-query" class="btn btn-default btn-xs">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>            
+        <header class="navbar navbar-default navbar-fixed-bottom bs-docs-nav">
+            <div class="footer">
+                <p class="muted credit pull-left">
+                    Inspired by Erlang, powered by
+                    <a target="_blank" href="http://www.swi-prolog.org/">SWI-Prolog</a>.
+                </p>
+                <input class="pull-right" id="slider" type='range' step='1' min='30' max='70' />
+            </div>
+        </header>
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="/vendor/jquery/jquery-2.0.3.min.js"></script>
+        <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/vendor/src-min-noconflict/ace.js" charset="utf-8"></script>
+        <script src="/apps/swish/js/jquery.mousewheel-min.js"></script>
+        <script src="/apps/swish/js/jquery.terminal.min.js"></script>
+        <script src="/apps/swish/js/swish.js" charset="utf-8"></script>
+<script>
+    var pid;
+    var gterm;
+    var gmysend;
+    var state = 1;
+    var currcommand = "";
+	var trace = !$("#json-trace-checkbox").is(':checked');
+    function to_text(data) {
+        var text = [];
+        var hasBindings = false;
+        for (var key in data) {
+            var value = data[key];
+            if (Array.isArray(value)) {
+                value = "[" + value + "]";
+            }
+            if (value.charAt(0) != "_") {
+                text.push(key + " = " + value);
+                text.push(", \n");
+                hasBindings = true;
+            }
+        }
+        text.pop(); // get rid of the last comma
+        text.push(" ");
+        if (hasBindings) {
+            return text.join("");
+        } else {
+            return "true ";
+        }
+    }
+    function report(data) {
+        return to_text(data[0]);
+    }
+    function speak(string) {
+        var uu = new SpeechSynthesisUtterance(string);
+        speechSynthesis.speak(uu);    
+    }
+
+    $(document).ready(function($) {
+        var ws = new WebSocket('ws://localhost:3060/ws', 'pcp-0.2'); 
+		function mysend(json) {
+			var jsonstr = JSON.stringify(json, null, 1);
+			if (!trace) {
+				gterm.echo(jsonstr, {
+					finalize: function(div) {
+    					div.css("color", "blue");
+					}					
+				});
+			};
+			ws.send(jsonstr); 
+		}
+        gmysend = mysend;
+        ws.onopen = function(message) {
+            mysend({
+				command:"pengine_spawn", 
+				options:"[exit(false), format('json-s')]"
+			});
+        };
+        ws.onerror = function(e) {
+            console.log(e);
+        };
+        ws.onclose = function(e) {
+            console.log(e);
+        };
+        ws.onmessage = function(message) {
+            var msg = JSON.parse(message.data);
+            if (msg.type == "spawned") {
+                pid = msg.pid;
+            }
+            $('#tutorial-container').load('/apps/swish/tutorial.html', function() {
+                    recursiveReplaceHost(document.body, window.location.origin);
+                    recursiveReplacePengine(document.body, pid);
+            });
+            disableButtons(false, true, true, true);
+
+        }; 
+        $('#shell').terminal(function(command, term) {
+            ws.onmessage = function(message) {
+                term.resume();
+                var msgstr = message.data;
+                msg = JSON.parse(msgstr);
+                if (!trace) {
+					term.echo(JSON.stringify(msg, null, 1), {
+    					finalize: function(div) {
+        					div.css("color", "green");
+    					}
+					});
+				}
+                var type = msg.type;
+                if (type == "success") {
+                    if (msg.more) {
+                        state = 4;
+                        term.set_prompt(report(msg.data));
+                        disableButtons(true, false, false, true);
+                    } else {
+                        state = 1;
+                        term.echo(report(msg.data).trim() + ".");
+                        term.set_prompt(myprompt);
+                        disableButtons(false, true, true, true);
+                    }
+                    term.scroll_to_bottom();
+                } else if (type == "failure") {
+                    state = 1;
+                    term.echo("false.");
+                    term.set_prompt(myprompt);
+                    term.scroll_to_bottom();
+                    disableButtons(false, true, true, true);
+                } else if (type == "error") {
+                    state = 1;
+                    term.error(msg.data);
+                    term.set_prompt(myprompt);
+                    term.scroll_to_bottom();
+                    disableButtons(false, true, true, true);
+                } else if (type == "stop") {
+                    state = 1;
+					if (!trace) {
+						term.update(-3, term.get_prompt().trim() + ".");
+					} else {
+						term.update(-1, term.get_prompt().trim() + ".");
+					}
+                    term.set_prompt(myprompt);
+                    term.scroll_to_bottom();
+                    disableButtons(false, true, true, true);
+                } else if (type == "prompt") {
+                    state = 3;
+                    term.set_prompt(msg.data + ": ");
+                } else if (type == "output") {
+                    term.echo(msg.data);                    
+                    term.set_prompt("");
+                } else if (type == "speak") {
+                    speak(msg.data);                    
+                    term.set_prompt("");
+                } else if (type == "echo") {
+                    term.echo(msg.data);
+                    term.set_prompt("");
+                } else if (type == "abort") {
+                    term.echo("Aborted");
+                    term.scroll_to_bottom();
+                    disableButtons(false, true, true, true);
+                } else if (type == "exit") {
+                    term.echo("Exiting");
+                    term.pop();
+                    term.echo("Exiting");
+                    if (ws) ws.close();
+                } else {
+                    term.echo(data);                    
+                }
+            };
+            myprompt = " \n?- ";
+            if (env.dirty) {
+                term.echo("Consulting from editor.");
+                var program = getProgram().replace(/'/g,"\\'");
+                console.log(program);
+                mysend({
+					command:"pengine_ask", 
+					pid:pid, 
+					query:"consult_text('" + program + "')"
+				});
+                env.dirty = false;
+                term.set_prompt("");
+            }
+            if (state == 1) {
+                if (command.trim() == "") {
+                    term.set_prompt(myprompt);
+                    term.scroll_to_bottom();
+                    disableButtons(false, true, true, true);
+                } else if (command.trim().endsWith('.')) {
+                    currcommand += command.trim().slice(0, -1);
+                    state = 2;
+                    mysend({
+						command:"pengine_ask", 
+						pid:pid, 
+						query:currcommand
+					});
+					updateHistory(currcommand);
+                    currcommand = "";
+                    term.pause();
+                    disableButtons(true, true, true, false);
+                } else {
+                    term.set_prompt("   ");
+                    currcommand += command; 
+                }
+            } else if (state == 4) {
+                if (command == ";") {
+                    state = 2;
+                    mysend({
+						command:"pengine_next", 
+						pid:pid
+					});
+                    term.pause();
+                    disableButtons(true, true, true, false);
+                } else if (command == "") {
+                    mysend({
+						command:"pengine_stop", 
+						pid:pid
+					});
+                    term.pause();
+                    disableButtons(true, true, true, false);
+                }
+            } else if (state == 3) {
+                state = 2;
+                if (command !== "") {
+                    mysend({
+						command:"pengine_respond", 
+						pid:pid, 
+						term:command
+					});
+                }
+                disableButtons(true, true, true, false);
+            }
+         }, {
+             greetings:'Welcome to SWI Web Prolog!\n',
+             prompt:'?- ',
+             onInit: function(term) {
+                 gterm = term;
+             },
+             keymap: {
+                 'CTRL+C': function(e, a) {
+                     if (state == 2 || state == 3) {
+                         mysend({
+							 command:"pengine_abort", 
+							 pid:pid
+						 });
+                         gterm.pause();
+                         return false;
+                     }
+                 }
+             },
+             keypress: function(e) {
+                 if (state == 4 && (e.which == 59 || e.which == 32)) {
+                     gterm.echo(gterm.get_prompt() + ";");
+                     mysend({
+						 command:"pengine_next", 
+						 pid:pid
+					 });
+                     gterm.pause();
+                     disableButtons(true, true, true, false);
+                     return false;
+                 }
+             },
+             convertLinks: false,
+             historyFilter: function(command) {
+                 if (command == "" ) return false;
+                 if (command == ";" ) return false;
+                 return true;
+             }
+             
+         }); 
+    });
+    
+</script>
+    </body>
+</html>
