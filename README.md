@@ -1,9 +1,30 @@
-# Erlang-style processes for SWI-Prolog
+# Web Prolog
 
-This repo contains highly experimental code to create lightweight
-Erlang-style processes based on Paul Tarau's engines/interactors.
+####Imagine a dialect of *Prolog* with processes and mailboxes and send and receive – all the means necessary for powerful concurrent and distributed programming. Alternatively, think of it as a dialect of *Erlang* with logic variables, backtracking search and a built-in database of facts and rules – the means for logic programming, knowledge representation and reasoning. Also, think of it as a *web logic programming language*. This is what *Web Prolog* is all about. 
 
-Most likely the organization, interfaces and naming of files and
-predicates will change in due time.
+This is a proof-of-concept demonstration/tutorial only. The system is _not_ yet ready for online employment. But you can install it locally, go through the tutorial, and play with lots of code examples.
 
-Work in progress by Torbjörn Lager and Jan Wielemaker.
+Design and implementation by Torbjörn Lager, with a _lot_ of help from Jan Wielemaker. 
+
+## Installation
+
+
+### Get the latest SWI-Prolog
+
+Install the latest  [SWI-Prolog](http://www.swi-prolog.org) _development
+version_. 
+
+### Clone or download the repo
+
+## Running Web Prolog
+
+From the 
+
+```
+$ cd web-client
+$ swipl run.pl
+```
+Now direct your browser to http://localhost:3060/apps/swish/index.html .
+
+
+
