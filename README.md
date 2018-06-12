@@ -8,6 +8,10 @@ This is a proof-of-concept demonstration/tutorial only. The system is _not_ yet 
 
 Design and implementation by Torbjörn Lager, with a _lot_ of help from Jan Wielemaker. 
 
+You may also want to have a look at SWISH (https://swish.swi-prolog.org/) which is a stable online IDE for Prolog, running 24/7 and having lots of users, especially among students taking CS courses involving logic programming and Prolog. 
+
+One of my long term goals is to replace the SWISH back-end with a Web Prolog node.
+
 ## Installation
 
 
