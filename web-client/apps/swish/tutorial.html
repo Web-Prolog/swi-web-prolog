@@ -483,7 +483,7 @@ p(p(with)) --&gt; [with].
 :- use_module(library(clpfd)).
 
 sudoku(Rows) :-
-        length(Rows, 9), maplist(length_(9), Rows),
+        length(Rows, 9), maplist(same_length(Rows), Rows),
         append(Rows, Vs), Vs ins 1..9,
         maplist(all_distinct, Rows),
         transpose(Rows, Columns),
@@ -491,22 +491,22 @@ sudoku(Rows) :-
         Rows = [A,B,C,D,E,F,G,H,I],
         blocks(A, B, C), blocks(D, E, F), blocks(G, H, I).
 
-length_(L, Ls) :- length(Ls, L).
-
 blocks([], [], []).
 blocks([A,B,C|Bs1], [D,E,F|Bs2], [G,H,I|Bs3]) :-
         all_distinct([A,B,C,D,E,F,G,H,I]),
         blocks(Bs1, Bs2, Bs3).
-        
-problem(1, [[_,_,_,_,_,_,_,_,_],
-            [_,_,_,_,_,3,_,8,5],
-            [_,_,1,_,2,_,_,_,_],
-            [_,_,_,5,_,7,_,_,_],
-            [_,_,4,_,_,_,1,_,_],
-            [_,9,_,_,_,_,_,_,_],
-            [5,_,_,_,_,_,_,7,3],
-            [_,_,2,_,1,_,_,_,_],
-            [_,_,_,_,4,_,_,_,9]]).
+
+problem(1, [[_,_,_, _,_,_, _,_,_],
+            [_,_,_, _,_,3, _,8,5],
+            [_,_,1, _,2,_, _,_,_],
+
+            [_,_,_, 5,_,7, _,_,_],
+            [_,_,4, _,_,_, 1,_,_],
+            [_,9,_, _,_,_, _,_,_],
+
+            [5,_,_, _,_,_, _,7,3],
+            [_,_,2, _,1,_, _,_,_],
+            [_,_,_, _,4,_, _,_,9]]).
 </pre>
 
 <p class="ask-buttons">
@@ -1057,11 +1057,11 @@ fridge(FoodList) ->
 
 
 <div class="alert alert-info">
-  <strong>Tip! (for Prologers)</strong> Yep, Fred Hebert's book is awesome, and it's free. Read it online at <a target="_blank" href="http://learnyousomeerlang.com">http://learnyousomeerlang.com</a>. If you are a prologer you could probably start from <a target="_blank" href="http://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency">here</a>. Another nice resource for learning more about Erlang is the video course at <a target="_blank" href="https://www.cs.kent.ac.uk/ErlangMasterClasses">https://www.cs.kent.ac.uk/ErlangMasterClasses</a>.
+  <strong>Tip! (for Prologers)</strong> Yep, Fred Hebert's book is awesome, and it's free. Read it online at <a target="_blank" href="http://learnyousomeerlang.com">http://learnyousomeerlang.com</a>. If you are a Prologer you could probably start from <a target="_blank" href="http://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency">here</a>. Another nice resource for learning more about Erlang is the video course at <a target="_blank" href="https://www.cs.kent.ac.uk/ErlangMasterClasses">https://www.cs.kent.ac.uk/ErlangMasterClasses</a>.
 </div>
 
 <div class="alert alert-info">
-  <strong>Tip! (for Erlangers)</strong> An interesting and newly written Prolog online book written by Markus Triska is available at <a target="_blank" href="https://www.metalevel.at/prolog">https://www.metalevel.at/prolog</a>. If  <a target="_blank" href="https://www.youtube.com/watch?v=G_eYTctGZw8">https://www.youtube.com/watch?v=G_eYTctGZw8</a>
+  <strong>Tip! (for Erlangers)</strong> An interesting and newly written Prolog online book authored by Markus Triska is available at <a target="_blank" href="https://www.metalevel.at/prolog">https://www.metalevel.at/prolog</a>. If you prefer to watch a video clip, <a target="_blank" href="https://www.youtube.com/watch?v=G_eYTctGZw8">https://www.youtube.com/watch?v=G_eYTctGZw8</a> is a great talk by Michael Hendricks.
 </div>
 
 <!--
