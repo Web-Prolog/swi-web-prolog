@@ -53,6 +53,18 @@
 :- use_module(pengines_io).
 
 
+:- if(current_predicate(uuid/2)).
+actor_uuid(Id) :-
+    uuid(Id, [version(4)]).        % Version 4 is random.
+:- else.
+:- use_module(library(random)).
+actor_uuid(Id) :-
+    Max is 1<<128,
+    random_between(0, Max, Num),
+    atom_number(Id, Num).
+:- endif.
+
+
 :- dynamic
     websocket/3,                        % Node, Thread, Socket
     self_node/1.                        % Node
@@ -92,7 +104,7 @@ node_action(self, Data, Socket) :-
 %    _{options:OptionString} :< Data,
     !,
 %    term_string(Options, OptionString),
-	uuid(Pid),
+	actor_uuid(Pid),
 %    select_option(format(Format), Options, _RestOptions, 'json-s'),
     assertz(pid_stdout_socket_format(Pid, Pid, Socket, json)),
     send(Pid, self(Pid)).
@@ -113,7 +125,7 @@ node_action(pengine_spawn, Data, Socket) :-
     _{options:OptionString} :< Data,
     !,
     term_string(Options, OptionString),
-	uuid(UUID),
+	actor_uuid(UUID),
     option(reply_to(Stdout), Options, UUID),
     assertz(actors:stdout(Stdout)),
     select_option(format(Format), Options, RestOptions, 'json-s'),
@@ -122,7 +134,7 @@ node_action(pengine_spawn, Data, Socket) :-
     send(Stdout, spawned(Pid)).
 node_action(pengine_spawn, _Data, Socket) :-
     !,
-	uuid(UUID),
+	actor_uuid(UUID),
     assertz(actors:stdout(UUID)),
     pengine_spawn(Pid, [sandboxed(false),reply_to(UUID)]),
     assertz(pid_stdout_socket_format(Pid, UUID, Socket, json)),

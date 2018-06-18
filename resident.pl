@@ -52,7 +52,6 @@ retract_father_child(Father, Child) :-
       retractall(father_child(Father, Child)).
 
 
-
 % Node-resident counting server:
 
 count_server(Count0) :-
