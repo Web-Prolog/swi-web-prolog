@@ -18,7 +18,6 @@
 :- use_module(library(http/http_host)).
 :- use_module(library(settings)).
 :- use_module(library(url)).
-:- use_module(library(uuid)).
 :- use_module(library(filesex)).
 
 :- setting(storage_dir, atom, storage, 'The directory for storing files.').
@@ -31,13 +30,25 @@ user:file_search_path(storage, Dir) :-
 :- http_handler(root(storage/update), update, []).
 
 
+:- if(current_predicate(uuid/2)).
+file_uuid(Id) :-
+    uuid(Id, [version(4)]).        % Version 4 is random.
+:- else.
+:- use_module(library(random)).
+file_uuid(Id) :-
+    Max is 1<<128,
+    random_between(0, Max, Num),
+    atom_number(Id, Num).
+:- endif.
+
+
 store(Request) :-
     http_parameters(Request,
         [   program(Program, []),
             type(Type, [default(pl)])
         ]),
 	setting(storage_dir, Dir),
-    uuid(Base),
+    file_uuid(Base),
     make_directory_path(Dir),
     file_name_extension(Base, Type, File),
     directory_file_path(Dir, File, RelPath),
