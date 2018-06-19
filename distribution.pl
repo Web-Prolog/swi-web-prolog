@@ -53,16 +53,11 @@
 :- use_module(pengines_io).
 
 
-:- if(current_predicate(uuid/2)).
-actor_uuid(Id) :-
-    uuid(Id, [version(4)]).        % Version 4 is random.
-:- else.
 :- use_module(library(random)).
 actor_uuid(Id) :-
     Max is 1<<128,
     random_between(0, Max, Num),
     atom_number(Id, Num).
-:- endif.
 
 
 :- dynamic

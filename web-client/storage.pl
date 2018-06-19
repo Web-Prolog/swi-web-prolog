@@ -30,16 +30,12 @@ user:file_search_path(storage, Dir) :-
 :- http_handler(root(storage/update), update, []).
 
 
-:- if(current_predicate(uuid/2)).
-file_uuid(Id) :-
-    uuid(Id, [version(4)]).        % Version 4 is random.
-:- else.
+
 :- use_module(library(random)).
 file_uuid(Id) :-
     Max is 1<<128,
     random_between(0, Max, Num),
     atom_number(Id, Num).
-:- endif.
 
 
 store(Request) :-
@@ -59,7 +55,7 @@ store(Request) :-
         port(Port)
     ]),
     setup_call_cleanup(open(RelPath, write, S), write(S, Program), close(S)),
-    reply_json(json([url=URL, file=File]), [width(0)]).
+    reply_json(_{url:URL, file:File}).
 
 
 
@@ -71,4 +67,4 @@ update(Request) :-
 	setting(storage_dir, Dir),
     directory_file_path(Dir, File, RelPath),
     setup_call_cleanup(open(RelPath, write, S), write(S, Program), close(S)),
-    reply_json(json([ok= @true]), [width(0)]).
+    reply_json(_{ok:true}).

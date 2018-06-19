@@ -62,16 +62,12 @@
 :- use_module(library(error)).
 :- use_module(library(broadcast)).
 
-:- if(current_predicate(uuid/2)).
-pid_uuid(Id) :-
-    uuid(Id, [version(4)]).        % Version 4 is random.
-:- else.
+
 :- use_module(library(random)).
 pid_uuid(Id) :-
     Max is 1<<128,
     random_between(0, Max, Num),
     atom_number(Id, Num).
-:- endif.
 
 
 :- meta_predicate

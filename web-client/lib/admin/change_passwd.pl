@@ -15,7 +15,7 @@ change_passwd(Request) :-
             [ passwd(Passwd, [])
             ]),    
     change_passwd(passwd, admin, Passwd),
-    reply_json(json([ok= @true])).
+    reply_json(_{ok:true}).
 
 
 change_passwd(File, User, Passwd) :-

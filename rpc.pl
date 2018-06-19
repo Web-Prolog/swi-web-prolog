@@ -44,16 +44,11 @@
 :- use_module(library(http/http_open)).
 :- use_module(library(debug)).
 
-:- if(current_predicate(uuid/2)).
-reference_uuid(Id) :-
-    uuid(Id, [version(4)]).        % Version 4 is random.
-:- else.
 :- use_module(library(random)).
 reference_uuid(Id) :-
     Max is 1<<128,
     random_between(0, Max, Num),
     atom_number(Id, Num).
-:- endif.
 
 
 :- use_module(actors).
