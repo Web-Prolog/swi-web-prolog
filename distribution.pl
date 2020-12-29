@@ -95,7 +95,7 @@ node_loop(Socket) :-
 
 
 
-node_action(self, Data, Socket) :-
+node_action(self, _Data, Socket) :-
 %    _{options:OptionString} :< Data,
     !,
 %    term_string(Options, OptionString),
