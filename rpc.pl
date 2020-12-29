@@ -54,8 +54,6 @@ reference_uuid(Id) :-
 :- use_module(actors).
 :- use_module(pengines2).
 
-:- use_module(library(pengines), []).
-
          /*******************************
          *       Synchronous RPC        *
          *******************************/
